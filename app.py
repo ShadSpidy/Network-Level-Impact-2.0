@@ -15,7 +15,8 @@ for row in range(118, 134):
 total_traffic = sum(node_wise_traffic.values())
 
 # Streamlit app
-st.title("Network Impact Calculator")
+st.title("Network Level Impact Calculator(2.0)")
+st.subheader("By: Shadman")
 
 # User input for impacted nodes
 user_input = st.text_input("Please enter the impacted node(s) (separate multiple nodes with commas):").upper()
