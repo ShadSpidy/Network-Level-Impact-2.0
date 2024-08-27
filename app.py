@@ -22,7 +22,7 @@ try:
     for row in range(118, 134):
         node_name = npi_report.cell(row, 3).value.upper().replace(' ', '')
         traffic = npi_report.cell(row, 7).value
-        if traffic is not None:  # Handle possible None values
+        if traffic is not None:
             node_wise_traffic[node_name] = traffic
 
     total_traffic = sum(node_wise_traffic.values())
@@ -34,7 +34,7 @@ try:
     user_input = st.text_input("Please enter the impacted node(s) (separate multiple nodes with commas):").upper()
 
     if st.button('Calculate Impact'):
-        if user_input:  # Check if user_input is not empty
+        if user_input:
             impacted_nodes = [node.strip() for node in user_input.split(',')]
             impacted_node_traffic = sum(node_wise_traffic.get(node, 0) for node in impacted_nodes)
 
@@ -49,11 +49,9 @@ try:
                 st.write(f"Current Network Level Impact is {round(NW_level_impact, 2)}%")
         else:
             st.info("Please enter the impacted node(s) to get results.")
-    
-    # Reset button
-    if st.button('Reset'):
-        st.caching.clear_cache()
-        st.experimental_rerun()
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
+
+# Footer credit
+st.markdown("**By: Shadman**", unsafe_allow_html=True)
