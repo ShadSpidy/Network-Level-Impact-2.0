@@ -54,4 +54,5 @@ except Exception as e:
     st.error(f"An error occurred: {e}")
 
 # Footer credit
-st.markdown("**By: Shadman**", unsafe_allow_html=True)
+st.markdown("**Created by Shadman**", unsafe_allow_html=True)
+
