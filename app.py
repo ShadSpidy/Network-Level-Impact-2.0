@@ -1,8 +1,16 @@
-import streamlit as st
 import openpyxl
+import requests
+from io import BytesIO
 
-# Load the Excel workbook and sheet
-npi_file = openpyxl.load_workbook("drc_npi.xlsx")
+file_url = "https://github.com/ShadSpidy/Network-Level-Impact-2.0/blob/main/drc_npi.xlsx
+
+def download_file(url):
+    response = requests.get(url)
+    response.raise_for_status()
+    return BytesIO(response.content)
+
+response = download_file(file_url)
+npi_file = openpyxl.load_workbook(response)
 npi_report = npi_file["Sheet"]
 
 # Extract node-wise traffic data
