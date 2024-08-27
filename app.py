@@ -12,7 +12,7 @@ def download_file(url):
     return BytesIO(response.content)
 
 # Define available OPCOs and node types
-opcoss = ["Nigeria", "DRC", "Chad"]
+opcos = ["Nigeria", "DRC", "Chad"]
 node_types = ["SDP", "OCC", "AIR"]
 
 try:
@@ -24,8 +24,8 @@ try:
     # Streamlit app
     st.title("Network Impact Calculator")
 
-    # OPCO selection
-    selected_opco = st.selectbox("Choose OPCO:", opcoss)
+    # OPCO selection (multiple options)
+    selected_opcos = st.multiselect("Choose OPCO(s):", opcos)
 
     # Node type selection
     selected_node_types = st.multiselect("Choose node type(s):", node_types)
@@ -36,14 +36,16 @@ try:
         for node_type in selected_node_types:
             node_options[node_type] = []
 
-        # Populate node options based on node types
+        # Populate node options based on node types and selected OPCOs
         for row in range(118, 134):
+            opco = npi_report.cell(row, 1).value.upper().replace(' ', '')  # Assuming OPCO is in column 1
             node_type = npi_report.cell(row, 2).value.upper().replace(' ', '')  # Assuming node type is in column 2
             node_name = npi_report.cell(row, 3).value.upper().replace(' ', '')  # Assuming node name is in column 3
-            if node_type in selected_node_types:
+            if opco in selected_opcos and node_type in selected_node_types:
                 if node_type not in node_options:
                     node_options[node_type] = []
-                node_options[node_type].append(node_name)
+                if node_name not in node_options[node_type]:
+                    node_options[node_type].append(node_name)
 
         # Display node selection based on chosen types
         selected_nodes = {}
@@ -53,17 +55,19 @@ try:
         if selected_nodes:
             # Calculate traffic for selected nodes
             impacted_node_traffic = 0
+            total_traffic = 0
             for node_type, nodes in selected_nodes.items():
                 for node in nodes:
-                    impacted_node_traffic += sum(
-                        npi_report.cell(row, 7).value for row in range(118, 134)
-                        if npi_report.cell(row, 2).value.upper().replace(' ', '') == node_type and
-                        npi_report.cell(row, 3).value.upper().replace(' ', '') == node
-                    )
+                    for row in range(118, 134):
+                        if (npi_report.cell(row, 1).value.upper().replace(' ', '') in selected_opcos and
+                            npi_report.cell(row, 2).value.upper().replace(' ', '') == node_type and
+                            npi_report.cell(row, 3).value.upper().replace(' ', '') == node):
+                            impacted_node_traffic += npi_report.cell(row, 7).value
 
-            total_traffic = sum(
-                npi_report.cell(row, 7).value for row in range(118, 134)
-            )
+            # Calculate total traffic for the selected OPCOs
+            for row in range(118, 134):
+                if npi_report.cell(row, 1).value.upper().replace(' ', '') in selected_opcos:
+                    total_traffic += npi_report.cell(row, 7).value
 
             if impacted_node_traffic == 0:
                 st.error("Invalid input or no valid nodes entered. Please enter valid node names.")
