@@ -2,7 +2,7 @@ import openpyxl
 import requests
 from io import BytesIO
 
-file_url = "https://github.com/ShadSpidy/Network-Level-Impact-2.0/blob/main/drc_npi.xlsx
+file_url = "https://github.com/ShadSpidy/Network-Level-Impact-2.0/blob/main/drc_npi.xlsx"
 
 def download_file(url):
     response = requests.get(url)
