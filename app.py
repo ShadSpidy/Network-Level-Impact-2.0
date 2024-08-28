@@ -70,7 +70,7 @@ try:
         impacted_node_traffic = sum(node_wise_traffic.get(node, 0) for node in impacted_nodes)
 
         if impacted_node_traffic == 0:
-            st.error("Invalid input or no valid nodes entered. Please enter valid node names.")
+            st.error("Invalid input. Please enter valid node names.")
         else:
             # User input for current percentage impact
             percentage_impact = st.number_input("Enter the current percentage impact (%):", min_value=0.0, max_value=100.0, step=0.1)
@@ -84,5 +84,5 @@ try:
 except Exception as e:
     st.error(f"An error occurred: {e}")
 
-# Footer credit
+# credit
 st.markdown("**Created by: Shadman**", unsafe_allow_html=True)
