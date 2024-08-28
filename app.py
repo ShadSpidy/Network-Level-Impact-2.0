@@ -4,7 +4,7 @@ from io import BytesIO
 import streamlit as st
 
 # Set page configuration
-st.set_page_config(page_title="Network Impact Calculator", layout="wide")
+st.set_page_config(page_title="Network Level Impact Calculator", layout="wide")
 
 # Add custom CSS to make it look darker
 st.markdown(
@@ -60,7 +60,7 @@ try:
     total_traffic = sum(node_wise_traffic.values())
 
     # Streamlit app
-    st.title("Network Impact Calculator")
+    st.title("Network Level Impact Calculator")
 
     # User input for impacted nodes
     user_input = st.text_input("Please enter the impacted node(s) (separate multiple nodes with commas):").upper()
