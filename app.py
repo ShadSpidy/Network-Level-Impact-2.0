@@ -60,7 +60,7 @@ try:
     total_traffic = sum(node_wise_traffic.values())
 
     # Streamlit app
-    st.title("Network Level Impact Calculator")
+    st.title("Network Level Impact Calculator 2.0")
 
     # User input for impacted nodes
     user_input = st.text_input("Please enter the impacted node(s) (separate multiple nodes with commas):").upper()
