@@ -77,7 +77,7 @@ try:
 
             # Calculate network level impact
             NW_level_impact = ((impacted_node_traffic / total_traffic) * 100) * (percentage_impact / 100)
-            st.markdown(f"<h2 style='font-size:24px;'>Current Network Level Impact is: {round(NW_level_impact, 2)}%</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h1 style='font-size:24px;'>Current Network Level Impact is: {round(NW_level_impact, 2)}%</h1>", unsafe_allow_html=True)
 
     else:
         st.info("Please enter the impacted node(s) to get results.")
